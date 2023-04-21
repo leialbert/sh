@@ -29,7 +29,7 @@ echo "Server basic setup complete!"
 read -p "Enter the domain you want to use: " server_name
 
 # Download the configuration file from the specified URL
-wget -O /tmp/x.conf https://www.leijingwei.com/x.conf
+wget -O /tmp/${server_name}.conf https://github.com/leialbert/sh/blob/main/res/your_domain.conf
 
 # Replace the server name in the configuration file
 sudo sed -i "s/server_name abc.example.com;/server_name ${server_name};/g" /tmp/${server_name}.conf
@@ -53,3 +53,41 @@ sudo systemctl restart nginx
 
 # Print success message
 echo "Server name updated to ${server_name}!"
+
+# Configure HTTPS for the domain using Certbot
+sudo certbot --nginx -d ${server_name}
+
+# Print success message
+echo "HTTPS configuration for ${server_name} complete!"
+
+echo "Start to intsall v2ray"
+bash <(curl -L https://raw.githubusercontent.com/v2fly/fhs-install-v2ray/master/install-release.sh)
+
+echo "Start to intsall warp and configure ipv4 and ipv6"
+bash <(curl -fsSL git.io/warp.sh) d
+
+echo "Start to configure WARP SOCKS5 proxy"
+bash <(curl -fsSL git.io/warp.sh) s5
+
+
+#!/bin/bash
+
+# Generate a new UUID
+new_uuid=$(cat /proc/sys/kernel/random/uuid)
+
+wget -O /tmp/config.json https://github.com/leialbert/sh/blob/main/res/config.json
+
+# Replace the old UUID in config.json with the new UUID
+sed -i "s/6095a644-66fd-4e5a-b793-f1b496040ab0/$new_uuid/g" /tmp/config.json
+# Replace the old host in config.json with the new host
+sed -i "s/abc.example.com/$server_name/g" /tmp/config.json
+# Copy it to the V2Ray configuration directory
+sudo cp -f /tmp/config.json /usr/local/etc/v2ray/config.json
+# Reload V2Ray to apply the changes
+systemctl reload v2ray
+
+
+
+
+
+
