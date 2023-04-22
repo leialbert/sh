@@ -35,7 +35,7 @@ wget -O /tmp/${server_name}.conf https://raw.githubusercontent.com/leialbert/sh/
 sudo sed -i "s/server_name abc.example.com;/server_name ${server_name};/g" /tmp/${server_name}.conf
 
 # Copy the modified configuration file to the Nginx sites-available directory
-sudo cp /tmp/x.conf /etc/nginx/sites-available/
+sudo cp -f /tmp/${server_name}.conf /etc/nginx/sites-available/
 
 # Test the configuration file syntax
 sudo nginx -t -c /etc/nginx/sites-available/${server_name}.conf
@@ -84,7 +84,7 @@ sed -i "s/abc.example.com/$server_name/g" /tmp/config.json
 # Copy it to the V2Ray configuration directory
 sudo cp -f /tmp/config.json /usr/local/etc/v2ray/config.json
 # Reload V2Ray to apply the changes
-systemctl reload v2ray
+systemctl restart v2ray
 
 
 
