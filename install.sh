@@ -42,7 +42,7 @@ sudo nginx -t -c /etc/nginx/sites-available/${server_name}.conf
 
 # If the test is successful, create a symbolic link to the sites-enabled directory
 
-sudo ln -s /etc/nginx/sites-available/${server_name}.conf /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/${server_name}.conf /etc/nginx/sites-enabled/${server_name}.conf
 
 # Restart Nginx to apply the changes
 sudo systemctl restart nginx
