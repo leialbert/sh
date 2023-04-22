@@ -50,6 +50,7 @@ sudo systemctl restart nginx
 # Print success message
 echo "Server name updated to ${server_name}!"
 
+sudo ln -s /snap/bin/certbot /usr/bin/certbot
 # Configure HTTPS for the domain using Certbot
 sudo certbot --nginx -d ${server_name}
 
