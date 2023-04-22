@@ -41,12 +41,8 @@ sudo cp -f /tmp/${server_name}.conf /etc/nginx/sites-available/
 sudo nginx -t -c /etc/nginx/sites-available/${server_name}.conf
 
 # If the test is successful, create a symbolic link to the sites-enabled directory
-if [ $? -eq 0 ]; then
-  sudo ln -s /etc/nginx/sites-available/${server_name}.conf /etc/nginx/sites-enabled/
-  echo "Configuration file ${server_name}.conf successfully linked to sites-enabled directory!"
-else
-  echo "Configuration file ${server_name}.conf syntax is invalid. Please check the file and try again."
-fi
+
+sudo ln -s /etc/nginx/sites-available/${server_name}.conf /etc/nginx/sites-enabled/
 
 # Restart Nginx to apply the changes
 sudo systemctl restart nginx
