@@ -51,8 +51,13 @@ sudo systemctl restart nginx
 echo "Server name updated to ${server_name}!"
 
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
+
 # Configure HTTPS for the domain using Certbot
-sudo certbot --nginx -d ${server_name}
+
+# Prompt the user to input the server name
+read -p "Enter the email address you want to use for certificates: " EMAIL_ADDRESS
+
+sudo certbot --nginx -d ${server_name} --non-interactive --agree-tos --email $EMAIL_ADDRESS
 
 # Print success message
 echo "HTTPS configuration for ${server_name} complete!"
