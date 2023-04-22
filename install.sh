@@ -29,7 +29,7 @@ echo "Server basic setup complete!"
 read -p "Enter the domain you want to use: " server_name
 
 # Download the configuration file from the specified URL
-wget -O /tmp/${server_name}.conf https://github.com/leialbert/sh/blob/main/res/your_domain.conf
+wget -O /tmp/${server_name}.conf https://raw.githubusercontent.com/leialbert/sh/main/res/your_domain.conf
 
 # Replace the server name in the configuration file
 sudo sed -i "s/server_name abc.example.com;/server_name ${server_name};/g" /tmp/${server_name}.conf
@@ -75,7 +75,7 @@ bash <(curl -fsSL git.io/warp.sh) s5
 # Generate a new UUID
 new_uuid=$(cat /proc/sys/kernel/random/uuid)
 
-wget -O /tmp/config.json https://github.com/leialbert/sh/blob/main/res/config.json
+wget -O /tmp/config.json https://raw.githubusercontent.com/leialbert/sh/main/res/config.json
 
 # Replace the old UUID in config.json with the new UUID
 sed -i "s/6095a644-66fd-4e5a-b793-f1b496040ab0/$new_uuid/g" /tmp/config.json
